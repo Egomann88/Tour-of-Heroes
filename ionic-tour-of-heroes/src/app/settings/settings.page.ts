@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Settings } from '../settings';
 
 @Component({
   selector: 'app-settings',
@@ -6,5 +7,21 @@ import { Component } from '@angular/core';
   styleUrls: ['settings.page.scss'],
 })
 export class settingsPage {
-  constructor() {}
+  settings: Settings;
+
+  constructor() {
+    this.settings = {
+      company: '',
+      name: '',
+      email: '',
+    };
+  }
+
+  cancel() {
+    console.log('Cancel clicked');
+  }
+
+  save() {
+    console.log('Save clicked');
+  }
 }
