@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Hero } from '../hero';
 import { HEROES } from '../heroesMock';
 
-
+import { ModalController } from '@ionic/angular';
+import { HeroCreateComponent } from '../hero-create/hero-create.component';
 
 @Component({
   selector: 'app-heroes',
@@ -12,7 +13,6 @@ import { HEROES } from '../heroesMock';
 export class HeroesPage {
   heroes = HEROES;
   selectedHero?: Hero;
-  message = 'Hello World, '; // TODO: remove this ; test for modal
 
   constructor(private modalCtrl: ModalController) {
     console.log(this.heroes);
@@ -22,4 +22,18 @@ export class HeroesPage {
     this.selectedHero = hero;
   }
 
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: HeroCreateComponent,
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    console.log(data, role);
+
+    if (role === 'confirm') {
+      this.heroes.push(data); // temporarily add to heroes array
+    }
+  }
 }
