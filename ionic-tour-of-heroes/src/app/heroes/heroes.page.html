@@ -7,11 +7,28 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">heroes</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="heroes page"></app-explore-container>
+  <ion-list>
+    <ion-item
+      *ngFor="let hero of heroes"
+      [routerLink]="['/hero-detail', hero.id]"
+      (click)="selectHero(hero)"
+    >
+      <!--
+      <ion-avatar slot="start">
+        <img [src]="hero.image" />
+      </ion-avatar> 
+      -->
+      <ion-label>
+        <h2>{{ hero.name }}</h2>
+        <p>{{ hero.id }}</p>
+      </ion-label>
+      <div>
+        <ion-icon name="chevron-forward-outline" size="large"></ion-icon>
+        <span *ngIf="hero.id == selectedHero?.id">
+          <ion-icon name="create-outline" size="large"></ion-icon>
+          <ion-icon name="trash-outline" size="large"></ion-icon>
+        </span>
+      </div>
+    </ion-item>
+  </ion-list>
 </ion-content>
