@@ -1,18 +1,14 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button color="medium" (click)="cancel()">Abbrechen</ion-button>
-    </ion-buttons>
-    <ion-title>Neuen Helden erstellen</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true">Erstellen</ion-button>
-    </ion-buttons>
+    <ion-title> Einstellungen </ion-title>
   </ion-toolbar>
 </ion-header>
+
 <ion-content class="ion-padding">
   <ion-item>
     <ion-input
       labelPlacement="stacked"
+      type="number"
       label="Id"
       [(ngModel)]="hero.id"
       placeholder="Id"
@@ -26,4 +22,13 @@
       placeholder="Name"
     ></ion-input>
   </ion-item>
+
+  <ion-toolbar>
+    <ion-item lines="none" slot="end">
+      <ion-button color="medium" (click)="cancel()">Abbrechen</ion-button>
+    </ion-item>
+    <ion-item lines="none" slot="end">
+      <ion-button color="primary" (click)="confirm()">Erstellen</ion-button>
+    </ion-item>
+  </ion-toolbar>
 </ion-content>
