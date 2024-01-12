@@ -3,7 +3,12 @@
     <ion-title>
       <ion-item lines="none">
         <ion-label> Helden </ion-label>
-        <ion-icon name="add-outline" size="large" color="black" (click)="openModal()"></ion-icon>
+        <ion-icon
+          name="add-outline"
+          size="large"
+          color="black"
+          (click)="openModal()"
+        ></ion-icon>
       </ion-item>
     </ion-title>
   </ion-toolbar>
@@ -11,11 +16,7 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item
-      *ngFor="let hero of heroes"
-      [routerLink]="['/hero-detail', hero.id]"
-      (click)="selectHero(hero)"
-    >
+    <ion-item *ngFor="let hero of heroes" (click)="selectHero(hero)">
       <!--
       <ion-avatar slot="start">
         <img [src]="hero.image" />
@@ -26,7 +27,13 @@
         <p>{{ hero.id }}</p>
       </ion-label>
       <div>
-        <ion-icon name="chevron-forward-outline" size="large"></ion-icon>
+        <ion-button
+          fill="clear"
+          color="dark"
+          [routerLink]="['/hero-details/', hero.id]"
+        >
+          <ion-icon name="chevron-forward-outline" size="large"></ion-icon>
+        </ion-button>
         <span *ngIf="hero.id == selectedHero?.id">
           <ion-icon name="create-outline" size="large"></ion-icon>
           <ion-icon name="trash-outline" size="large"></ion-icon>
