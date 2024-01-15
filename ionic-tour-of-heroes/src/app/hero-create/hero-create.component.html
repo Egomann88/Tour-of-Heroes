@@ -28,7 +28,9 @@
       <ion-button color="medium" (click)="cancel()">Abbrechen</ion-button>
     </ion-item>
     <ion-item lines="none" slot="end">
-      <ion-button color="primary" (click)="confirm()">Erstellen</ion-button>
+      <ion-button color="primary" (click)="confirm()">{{
+        confirmText
+      }}</ion-button>
     </ion-item>
   </ion-toolbar>
 </ion-content>

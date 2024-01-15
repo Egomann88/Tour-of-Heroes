@@ -14,17 +14,18 @@ export class HeroesPage {
   heroes = HEROES;
   selectedHero?: Hero;
 
-  constructor(private modalCtrl: ModalController) {
-    console.log(this.heroes);
-  }
+  constructor(private modalCtrl: ModalController) {}
 
   selectHero(hero: Hero) {
     this.selectedHero = hero;
   }
 
-  async openModal() {
+  async openModal(heroId: number) {
     const modal = await this.modalCtrl.create({
       component: HeroCreateComponent,
+      componentProps: {
+        heroId: heroId,
+      },
     });
     modal.present();
 
@@ -32,8 +33,13 @@ export class HeroesPage {
 
     console.log(data, role);
 
-    if (role === 'confirm') {
-      this.heroes.push(data); // temporarily add to heroes array
+    // edit are only temporarily
+    if (role === 'create') {
+      this.heroes.push(data);
+      console.log(this.heroes);
+    } else if (role === 'confirm') {
+      const index = this.heroes.findIndex((hero) => hero.id === data.id);
+      this.heroes[index] = data;
     }
   }
 }
