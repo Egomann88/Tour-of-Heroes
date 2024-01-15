@@ -5,11 +5,11 @@ import { HEROES } from '../heroesMock';
 import { createEmptyHero } from '../heroService';
 
 @Component({
-  selector: 'app-hero-create',
-  templateUrl: './hero-create.component.html',
-  styleUrls: ['./hero-create.component.scss'],
+  selector: 'app-hero-manage',
+  templateUrl: './hero-manage.component.html',
+  styleUrls: ['./hero-manage.component.scss'],
 })
-export class HeroCreateComponent {
+export class HeroManageComponent {
   hero: Hero;
   confirmText: string;
 

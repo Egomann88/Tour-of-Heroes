@@ -3,7 +3,7 @@ import { Hero } from '../hero';
 import { HEROES } from '../heroesMock';
 
 import { ModalController } from '@ionic/angular';
-import { HeroCreateComponent } from '../hero-create/hero-create.component';
+import { HeroManageComponent } from '../hero-manage/hero-manage.component';
 
 @Component({
   selector: 'app-heroes',
@@ -22,7 +22,7 @@ export class HeroesPage {
 
   async openModal(heroId: number) {
     const modal = await this.modalCtrl.create({
-      component: HeroCreateComponent,
+      component: HeroManageComponent,
       componentProps: {
         heroId: heroId,
       },

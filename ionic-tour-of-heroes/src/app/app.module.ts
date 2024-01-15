@@ -7,11 +7,16 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroCreateComponent } from './hero-create/hero-create.component';
+import { HeroManageComponent } from './hero-manage/hero-manage.component';
 
 @NgModule({
-  declarations: [AppComponent, HeroCreateComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, FormsModule],
+  declarations: [AppComponent, HeroManageComponent],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    FormsModule,
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
