@@ -7,21 +7,33 @@
 <ion-content class="ion-padding">
   <ion-item>
     <ion-input
-      labelPlacement="stacked"
+      labelPlacement="floating"
       type="number"
       label="Id"
       [(ngModel)]="hero.id"
       placeholder="Id"
       [readonly]="confirmText == 'Entfernen'"
       [disabled]="confirmText == 'Entfernen'"
+      required="true"
     ></ion-input>
   </ion-item>
   <ion-item>
     <ion-input
-      labelPlacement="stacked"
+      labelPlacement="floating"
       label="Name"
       [(ngModel)]="hero.name"
-      placeholder="Name"
+      placeholder="Hulk"
+      [readonly]="confirmText == 'Entfernen'"
+      [disabled]="confirmText == 'Entfernen'"
+      required="true"
+    ></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input
+      labelPlacement="floating"
+      label="Super-Power"
+      [(ngModel)]="hero.superPower"
+      placeholder="unmenschliche Stärke"
       [readonly]="confirmText == 'Entfernen'"
       [disabled]="confirmText == 'Entfernen'"
     ></ion-input>
