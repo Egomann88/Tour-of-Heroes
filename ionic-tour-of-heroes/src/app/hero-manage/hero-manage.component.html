@@ -5,50 +5,95 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-input
-      labelPlacement="floating"
-      type="number"
-      label="Id"
-      [(ngModel)]="hero.id"
-      placeholder="Id"
-      [readonly]="confirmText == 'Entfernen'"
-      [disabled]="confirmText == 'Entfernen'"
-      required="true"
-    ></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input
-      labelPlacement="floating"
-      label="Name"
-      [(ngModel)]="hero.name"
-      placeholder="Hulk"
-      [readonly]="confirmText == 'Entfernen'"
-      [disabled]="confirmText == 'Entfernen'"
-      required="true"
-    ></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input
-      labelPlacement="floating"
-      label="Super-Power"
-      [(ngModel)]="hero.superPower"
-      placeholder="unmenschliche Stärke"
-      [readonly]="confirmText == 'Entfernen'"
-      [disabled]="confirmText == 'Entfernen'"
-    ></ion-input>
-  </ion-item>
+  <form [formGroup]="formData" (ngSubmit)="confirm()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          labelPlacement="stacked"
+          label="Id"
+          type="number"
+          placeholder="Id"
+          formControlName="id"
+          required="required"
+        ></ion-input>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formData.controls['id'].errors && formData.controls['id'].touched
+          "
+        >
+          <div
+            *ngFor="let error of errors['id']"
+            [hidden]="!formData.controls['id'].hasError(error.ErrorType)"
+          >
+            {{ error.ErrorMessage }}
+          </div>
+        </ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          labelPlacement="stacked"
+          label="Name"
+          placeholder="Hulk"
+          formControlName="name"
+          required="required"
+        ></ion-input>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formData.controls['name'].errors &&
+            formData.controls['name'].touched
+          "
+        >
+          <div
+            *ngFor="let error of errors['name']"
+            [hidden]="!formData.controls['name'].hasError(error.ErrorType)"
+          >
+            {{ error.ErrorMessage }}
+          </div>
+        </ion-text>
+      </ion-item>
+      <ion-item>
+        <ion-input
+          labelPlacement="stacked"
+          label="Super-Power"
+          placeholder="unmenschliche Stärke"
+          formControlName="superPower"
+        ></ion-input>
+        <ion-text
+          class="alert alert-danger"
+          *ngIf="
+            formData.controls['superPower'].errors &&
+            formData.controls['superPower'].touched
+          "
+        >
+          <div
+            *ngFor="let error of errors['superPower']"
+            [hidden]="
+              !formData.controls['superPower'].hasError(error.ErrorType)
+            "
+          >
+            <ul class="p-2 m-0">
+              <li>{{ error.ErrorMessage }}</li>
+            </ul>
+          </div>
+        </ion-text>
+        <app-error-message-field [formData]="formData" [fieldName]="superPower"></app-error-message-field>
+      </ion-item>
+    </ion-list>
 
-  <ion-toolbar>
-    <ion-item lines="none" slot="end">
-      <ion-button color="medium" (click)="cancel()">Abbrechen</ion-button>
-    </ion-item>
-    <ion-item lines="none" slot="end">
-      <ion-button
-        [color]="confirmText != 'Entfernen' ? 'primary' : 'danger'"
-        (click)="confirm()"
-        >{{ confirmText }}</ion-button
-      >
-    </ion-item>
-  </ion-toolbar>
+    <ion-toolbar>
+      <ion-item lines="none" slot="end">
+        <ion-button color="medium" (click)="cancel()">Abbrechen</ion-button>
+      </ion-item>
+      <ion-item lines="none" slot="end">
+        <ion-button
+          type="submit"
+          [color]="confirmText != 'Entfernen' ? 'primary' : 'danger'"
+          [disabled]="!formData.valid"
+          >{{ confirmText }}</ion-button
+        >
+      </ion-item>
+    </ion-toolbar>
+  </form>
 </ion-content>
