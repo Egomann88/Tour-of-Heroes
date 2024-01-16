@@ -12,7 +12,7 @@
       label="Id"
       [(ngModel)]="hero.id"
       placeholder="Id"
-      readonly="confirmText != 'Entfernen'"
+      readonly="confirmText == 'Entfernen'"
     ></ion-input>
   </ion-item>
   <ion-item>
@@ -21,7 +21,7 @@
       label="Name"
       [(ngModel)]="hero.name"
       placeholder="Name"
-      readonly="confirmText != 'Entfernen'"
+      readonly="confirmText == 'Entfernen'"
     ></ion-input>
   </ion-item>
 
