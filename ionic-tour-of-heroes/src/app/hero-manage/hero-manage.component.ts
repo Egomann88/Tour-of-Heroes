@@ -27,11 +27,11 @@ export class HeroManageComponent {
     // create form
     this.formData = new FormGroup({
       id: new FormControl(
-        { value: '', disabled: this.confirmText == 'Entfernen' },
+        { value: this.hero.id, disabled: this.confirmText == 'Entfernen' },
         Validators.required
       ),
       name: new FormControl(
-        { value: '', disabled: this.confirmText == 'Entfernen' },
+        { value: this.hero.name, disabled: this.confirmText == 'Entfernen' },
         [
           Validators.required,
           Validators.maxLength(30),
@@ -39,7 +39,10 @@ export class HeroManageComponent {
         ]
       ),
       superPower: new FormControl(
-        { value: '', disabled: this.confirmText == 'Entfernen' },
+        {
+          value: this.hero.superPower,
+          disabled: this.confirmText == 'Entfernen',
+        },
         [
           Validators.maxLength(30),
           Validators.pattern(/^[a-zA-Z0-9]+(?:[\s.][a-zA-Z0-9]+)*$/), // letters numbers spaces and points, no spaces at beginning and end
@@ -82,6 +85,10 @@ export class HeroManageComponent {
   }
 
   confirm() {
+    this.hero.id = this.formData.value.id;
+    this.hero.name = this.formData.value.name;
+    this.hero.superPower = this.formData.value.superPower;
+
     if (this.hero.id == 0) return this.modalCtrl.dismiss(this.hero, 'create');
     else if (this.confirmText == 'Aktualisieren')
       return this.modalCtrl.dismiss(this.hero, 'confirm');
