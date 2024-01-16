@@ -27,6 +27,7 @@
     "@capacitor/keyboard": "5.0.7",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.0.0",
+    "bootstrap": "^5.3.2",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -61,5 +62,8 @@
     "ts-node": "^8.3.0",
     "typescript": "~5.2.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "config": {
+    "ionic_sass": "./sass.config.js"
+  }
 }
