@@ -26,7 +26,6 @@ export class HeroManageComponent {
 
     // create form
     this.formData = new FormGroup({
-      id: new FormControl(this.hero.id, Validators.required),
       name: new FormControl(this.hero.name, [
         Validators.required,
         Validators.maxLength(30),
@@ -41,7 +40,6 @@ export class HeroManageComponent {
 
   ngOnInit() {
     this.errors = {
-      id: [{ ErrorType: 'required', ErrorMessage: 'Id ist erforderlich.' }],
       name: [
         { ErrorType: 'required', ErrorMessage: 'Name ist erforderlich.' },
         {

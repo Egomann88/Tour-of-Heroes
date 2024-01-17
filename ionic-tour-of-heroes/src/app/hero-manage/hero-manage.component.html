@@ -10,31 +10,6 @@
       <ion-item>
         <ion-input
           labelPlacement="stacked"
-          label="Id"
-          type="number"
-          placeholder="Id"
-          formControlName="id"
-          required="required"
-        ></ion-input>
-        <ion-text
-          class="alert alert-danger"
-          *ngIf="
-            formData.controls['id'].errors && formData.controls['id'].touched
-          "
-        >
-          <div
-            *ngFor="let error of errors['id']"
-            [hidden]="!formData.controls['id'].hasError(error.ErrorType)"
-          >
-            <ul class="p-2 m-0">
-              <li>{{ error.ErrorMessage }}</li>
-            </ul>
-          </div>
-        </ion-text>
-      </ion-item>
-      <ion-item>
-        <ion-input
-          labelPlacement="stacked"
           label="Name"
           placeholder="Hulk"
           formControlName="name"
