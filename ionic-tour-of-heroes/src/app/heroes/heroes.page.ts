@@ -24,9 +24,7 @@ export class HeroesPage {
 
   findHero = (hero: Hero) => hero.id === this.selectedHero?.id;
 
-  selectHero(hero: Hero) {
-    this.selectedHero = hero;
-  }
+  selectHero = (hero: Hero) => (this.selectedHero = hero);
 
   async createHero() {
     const response = await this.openModal('Erstellen', createEmptyHero);
