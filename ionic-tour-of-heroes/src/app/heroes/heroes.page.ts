@@ -20,23 +20,32 @@ export class HeroesPage {
     private alertCtrl: AlertController
   ) {}
 
+  unpack = (hero: Hero) => ({ ...hero });
+
+  findHero = (hero: Hero) => hero.id === this.selectedHero?.id;
+
   selectHero(hero: Hero) {
     this.selectedHero = hero;
   }
 
-  createHero() {
-    this.openModal('Erstellen', createEmptyHero);
+  async createHero() {
+    const response = await this.openModal('Erstellen', createEmptyHero);
+
+    if (response.role != 'confirm') return;
+
+    this.heroes.push(response.data);
   }
 
-  editHero() {
-    this.openModal('Aktualisieren', () =>
+  async editHero() {
+    const response = await this.openModal('Aktualisieren', () =>
       this.unpack(HEROES.find(this.findHero)!)
     );
+
+    if (response.role != 'confirm') return;
+
+    const index = this.heroes.findIndex(this.findHero);
+    this.heroes[index] = response.data;
   }
-
-  unpack = (hero: Hero) => ({ ...hero });
-
-  findHero = (hero: Hero) => hero.id === this.selectedHero?.id;
 
   async openModal(msg: string, func: () => Object) {
     const modal = await this.modalCtrl.create({
@@ -48,18 +57,7 @@ export class HeroesPage {
     });
     modal.present();
 
-    const { data, role } = await modal.onWillDismiss();
-
-    console.log(data, role);
-
-    // edit are only temporarily
-    if (role === 'create') {
-      this.heroes.push(data);
-      console.log(this.heroes);
-    } else if (role === 'confirm') {
-      const index = this.heroes.findIndex((hero) => hero.id === data.id);
-      this.heroes[index] = data;
-    }
+    return await modal.onWillDismiss();
   }
 
   async openChoiceAlert(title: string, msg?: string, funcs?: Function[]) {
