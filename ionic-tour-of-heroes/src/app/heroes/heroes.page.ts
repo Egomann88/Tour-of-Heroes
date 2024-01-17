@@ -59,7 +59,7 @@ export class HeroesPage {
 
   async editHero() {
     const response = await this.openModal('Aktualisieren', () =>
-      this.unpack(HEROES.find(this.findHero)!)
+      this.unpack(this.heroes.find(this.findHero)!)
     );
 
     if (response.role != 'confirm') return;
