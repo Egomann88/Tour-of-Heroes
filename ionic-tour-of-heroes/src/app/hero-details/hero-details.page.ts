@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Hero } from '../hero';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Hero } from '../hero';
 
 @Component({
   selector: 'app-hero-details',

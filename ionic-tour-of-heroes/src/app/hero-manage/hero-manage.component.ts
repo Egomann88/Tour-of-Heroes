@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { Hero } from '../hero';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Hero } from '../hero';
 
 @Component({
   selector: 'app-hero-manage',

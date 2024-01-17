@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { Hero } from '../hero';
-
 import { AlertController, ModalController } from '@ionic/angular';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { HeroManageComponent } from '../hero-manage/hero-manage.component';
 import { createEmptyHero } from '../heroService';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Hero } from '../hero';
 
 @Component({
   selector: 'app-heroes',
