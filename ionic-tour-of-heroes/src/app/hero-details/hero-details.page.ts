@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Hero } from '../hero';
-import { HEROES } from '../heroesMock';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({

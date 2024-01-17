@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Hero } from '../hero';
-import { HEROES } from '../heroesMock';
 
 import { AlertController, ModalController } from '@ionic/angular';
 import { HeroManageComponent } from '../hero-manage/hero-manage.component';
