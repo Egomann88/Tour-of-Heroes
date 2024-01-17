@@ -51,7 +51,7 @@ export class HeroManageComponent {
         {
           ErrorType: 'pattern',
           ErrorMessage:
-            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende.',
+            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende. Keine Leerzeichen nach Punkten.',
         },
       ],
       superPower: [
@@ -62,7 +62,7 @@ export class HeroManageComponent {
         {
           ErrorType: 'pattern',
           ErrorMessage:
-            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende.',
+            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende. Keine Leerzeichen nach Punkten.',
         },
       ],
     };
