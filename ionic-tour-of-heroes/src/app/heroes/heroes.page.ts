@@ -13,7 +13,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['heroes.page.scss'],
 })
 export class HeroesPage {
-  heroes = HEROES;
+  heroes: Hero[] = [];
   selectedHero?: Hero;
 
   constructor(
