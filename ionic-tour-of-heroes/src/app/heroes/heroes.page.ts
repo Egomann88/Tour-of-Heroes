@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Hero } from '../hero';
 import { HEROES } from '../heroesMock';
 
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { HeroManageComponent } from '../hero-manage/hero-manage.component';
 import { createEmptyHero } from '../heroService';
 
@@ -15,7 +15,10 @@ export class HeroesPage {
   heroes = HEROES;
   selectedHero?: Hero;
 
-  constructor(private modalCtrl: ModalController) {}
+  constructor(
+    private modalCtrl: ModalController,
+    private alertCtrl: AlertController
+  ) {}
 
   selectHero(hero: Hero) {
     this.selectedHero = hero;
@@ -29,10 +32,6 @@ export class HeroesPage {
     this.openModal('Aktualisieren', () =>
       this.unpack(HEROES.find(this.findHero)!)
     );
-  }
-
-  deleteHero() {
-    this.openModal('Entfernen', () => this.unpack(HEROES.find(this.findHero)!));
   }
 
   unpack = (hero: Hero) => ({ ...hero });
@@ -60,12 +59,51 @@ export class HeroesPage {
     } else if (role === 'confirm') {
       const index = this.heroes.findIndex((hero) => hero.id === data.id);
       this.heroes[index] = data;
-    } else if (role === 'delete') {
-      this.selectedHero = undefined;
-      const index = this.heroes.findIndex((hero) => hero.id === data.id);
+    }
+  }
 
-      if (index !== -1) HEROES.splice(index, 1);
-      else console.error('Hero not found. Index: ' + index);
+  async openChoiceAlert(title: string, msg?: string, funcs?: Function[]) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      message: msg,
+      buttons: [
+        {
+          text: 'Abbrechen',
+          role: 'cancel',
+          handler: () => {
+            funcs?.[0]();
+          },
+        },
+        {
+          text: 'Bestätigen',
+          role: 'confirm',
+          handler: () => {
+            funcs?.[1]();
+          },
+        },
+      ],
+    });
+
+    alert.present();
+
+    return await alert.onDidDismiss();
+  }
+
+  async deleteHero() {
+    const response = await this.openChoiceAlert(
+      'Notiz löschen',
+      'Willst du diesen Helden wirklich löschen?'
+    );
+
+    if (response.role != 'confirm') return;
+
+    try {
+      const index = this.heroes.findIndex(this.findHero);
+      this.selectedHero = undefined;
+
+      this.heroes.splice(index, 1);
+    } catch (e) {
+      console.error(e);
     }
   }
 }
