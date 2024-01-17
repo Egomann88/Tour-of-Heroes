@@ -67,7 +67,7 @@ export class HeroesPage {
     const index = this.heroes.findIndex(this.findHero);
     this.afFireStore
       .collection('heroes')
-      .doc(this.heroes[index].id.toString())
+      .doc(this.heroes[index].id)
       .update(response.data);
   }
 
@@ -85,7 +85,7 @@ export class HeroesPage {
 
       this.afFireStore
         .collection('heroes')
-        .doc(this.heroes[index].id.toString())
+        .doc(this.heroes[index].id)
         .delete();
     } catch (e) {
       console.error(e);
