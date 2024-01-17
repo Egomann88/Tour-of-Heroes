@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
-
 import { settingsPage } from './settings.page';
 
 describe('settingsPage', () => {
@@ -12,7 +10,7 @@ describe('settingsPage', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [settingsPage],
-      imports: [IonicModule.forRoot(), ExploreContainerComponentModule],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(settingsPage);
