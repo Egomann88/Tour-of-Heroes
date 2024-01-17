@@ -26,28 +26,16 @@ export class HeroManageComponent {
 
     // create form
     this.formData = new FormGroup({
-      id: new FormControl(
-        { value: this.hero.id, disabled: this.confirmText == 'Entfernen' },
-        Validators.required
-      ),
-      name: new FormControl(
-        { value: this.hero.name, disabled: this.confirmText == 'Entfernen' },
-        [
-          Validators.required,
-          Validators.maxLength(30),
-          Validators.pattern(/^[a-zA-Z0-9]+(?:[\s.][a-zA-Z0-9]+)*$/), // letters numbers spaces and points, no spaces at beginning and end
-        ]
-      ),
-      superPower: new FormControl(
-        {
-          value: this.hero.superPower,
-          disabled: this.confirmText == 'Entfernen',
-        },
-        [
-          Validators.maxLength(30),
-          Validators.pattern(/^[a-zA-Z0-9]+(?:[\s.][a-zA-Z0-9]+)*$/), // letters numbers spaces and points, no spaces at beginning and end
-        ]
-      ),
+      id: new FormControl(this.hero.id, Validators.required),
+      name: new FormControl(this.hero.name, [
+        Validators.required,
+        Validators.maxLength(30),
+        Validators.pattern(/^[a-zA-Z0-9]+(?:[\s.][a-zA-Z0-9]+)*$/), // letters numbers spaces and points, no spaces at beginning and end
+      ]),
+      superPower: new FormControl(this.hero.superPower, [
+        Validators.maxLength(30),
+        Validators.pattern(/^[a-zA-Z0-9]+(?:[\s.][a-zA-Z0-9]+)*$/), // letters numbers spaces and points, no spaces at beginning and end
+      ]),
     });
   }
 
@@ -89,9 +77,8 @@ export class HeroManageComponent {
     this.hero.name = this.formData.value.name;
     this.hero.superPower = this.formData.value.superPower;
 
-    if (this.hero.id == 0) return this.modalCtrl.dismiss(this.hero, 'create');
-    else if (this.confirmText == 'Aktualisieren')
-      return this.modalCtrl.dismiss(this.hero, 'confirm');
-    else return this.modalCtrl.dismiss(this.hero, 'delete');
+    if (this.confirmText == 'Erstellen')
+      return this.modalCtrl.dismiss(this.hero, 'create');
+    else return this.modalCtrl.dismiss(this.hero, 'confirm');
   }
 }
