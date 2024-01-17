@@ -73,12 +73,6 @@ export class HeroManageComponent {
   }
 
   confirm() {
-    this.hero.id = this.formData.value.id;
-    this.hero.name = this.formData.value.name;
-    this.hero.superPower = this.formData.value.superPower;
-
-    if (this.confirmText == 'Erstellen')
-      return this.modalCtrl.dismiss(this.hero, 'create');
-    else return this.modalCtrl.dismiss(this.hero, 'confirm');
+    return this.modalCtrl.dismiss(this.formData.value, 'confirm');
   }
 }
