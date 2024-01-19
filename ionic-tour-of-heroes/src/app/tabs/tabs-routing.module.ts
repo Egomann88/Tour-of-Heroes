@@ -20,6 +20,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'login',
+        loadChildren: () =>
+          import('../login-register/login-register.module').then(
+            (m) => m.LoginRegisterPageModule
+          ),
+      },
+      {
         path: '',
         redirectTo: '/tabs/heroes',
         pathMatch: 'full',
