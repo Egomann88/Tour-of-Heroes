@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-button fill="clear" color="dark" (click)="goBack()">
+        <ion-icon name="chevron-back-outline" size="large"></ion-icon>
+      </ion-button>
+      <ion-title>{{ confirmText }}</ion-title>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item lines="full">
+        <ion-input
+          labelPlacement="stacked"
+          label="E-Mail"
+          type="text"
+          formControlName="email"
+          required
+        ></ion-input>
+        <ion-text
+          class="alert alert-danger"
+          *ngIf="
+            formData.controls['email'].errors &&
+            formData.controls['email'].touched
+          "
+        >
+          <div
+            *ngFor="let error of errors['email']"
+            [hidden]="!formData.controls['email'].hasError(error.ErrorType)"
+          >
+            <ul class="p-2 m-0">
+              <li>{{ error.ErrorMessage }}</li>
+            </ul>
+          </div>
+        </ion-text>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-input
+          labelPlacement="stacked"
+          label="Passwort"
+          type="password"
+          formControlName="password"
+          required
+        ></ion-input>
+        <ion-text
+          class="alert alert-danger"
+          *ngIf="
+            formData.controls['password'].errors &&
+            formData.controls['password'].touched
+          "
+        >
+          <div
+            *ngFor="let error of errors['password']"
+            [hidden]="!formData.controls['password'].hasError(error.ErrorType)"
+          >
+            <ul class="p-2 m-0">
+              <li>{{ error.ErrorMessage }}</li>
+            </ul>
+          </div>
+        </ion-text>
+      </ion-item>
+    </ion-list>
+
+    <ion-toolbar>
+      <ion-item lines="none" slot="end">
+        <ion-button
+          [disabled]="!formData.valid"
+          color="primary"
+          type="submit"
+          expand="block"
+          >{{ confirmText }}</ion-button
+        >
+      </ion-item>
+      <ion-item lines="none">
+        <a href="#" class="small-text">Password vergessen?</a>
+      </ion-item>
+    </ion-toolbar>
+    <ion-item lines="none">
+      <ion-text (click)="switchPageMode()"
+        >Möchten Sie lieber
+        <ion-text color="primary">{{ confirmTexts[+!isRegister] }}</ion-text
+        >?</ion-text
+      >
+    </ion-item>
+  </form>
+</ion-content>
