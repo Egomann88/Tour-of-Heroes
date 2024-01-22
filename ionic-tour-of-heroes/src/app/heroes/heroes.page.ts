@@ -81,10 +81,7 @@ export class HeroesPage {
       const index = this.heroes.findIndex(this.findHero);
       this.selectedHero = undefined;
 
-      this.afFireStore
-        .collection('heroes')
-        .doc(this.heroes[index].id)
-        .delete();
+      this.afFireStore.collection('heroes').doc(this.heroes[index].id).delete();
     } catch (e) {
       console.error(e);
     }
