@@ -1,9 +1,11 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AlertController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
+import { StorageService } from '../storageService';
+import { LoginService } from '../loginService';
 
 @Component({
   selector: 'app-login-register',
@@ -21,7 +23,9 @@ export class LoginRegisterPage implements OnInit {
   constructor(
     private router: Router,
     private auth: AngularFireAuth,
-    private alertCtrl: AlertController
+    private toastCtrl: ToastController,
+    private storage: StorageService,
+    private loginService: LoginService
   ) {
     this.formData = new FormGroup({
       email: new FormControl(this.user.email, [
@@ -70,33 +74,51 @@ export class LoginRegisterPage implements OnInit {
 
     if (this.isRegister) this.register();
     else this.login();
+
+    if (this.loginService.isLoggedIn) this.goBack();
   }
 
   register() {
     this.auth
       .createUserWithEmailAndPassword(this.user.email, this.user.password)
       .then((res: any) => {
-        console.log(res);
+        this.showToast(
+          'Erfolgreich registriert! Sie sie werden automatisch eingelogt.',
+          'success'
+        );
 
-        this.alertCtrl.create({
-          header: 'Erfolgreich registriert',
-          message: 'Sie sie werden automatisch eingelogt.',
-          buttons: ['OK'],
-        });
-
-        // access token speichern
-        // ionic-storage verwenden
-
-        // login ausführen
-
-        // auf home page navigieren
+        this.storage.set('accessToken', res.user._delegate.accessToken);
+        this.loginService.isLoggedIn = true;
       })
       .catch((e: Error) => {
+        this.showToast('Falsche E-mail oder Passwort!', 'danger');
         console.log(e);
       });
   }
 
-  login() {}
+  login() {
+    this.auth
+      .signInWithEmailAndPassword(this.user.email, this.user.password)
+      .then((res: any) => {
+        this.showToast('Erfolgreich eingelogt!', 'success');
+        this.storage.set('accessToken', res.user._delegate.accessToken);
+        this.loginService.isLoggedIn = true;
+      })
+      .catch((e: Error) => {
+        this.showToast('Falsche E-mail oder Passwort!', 'danger');
+        console.error('Error during login:', e);
+      });
+  }
+
+  showToast(message: string, color: string) {
+    const toast = this.toastCtrl.create({
+      message: message,
+      position: 'bottom',
+      color: color,
+      duration: 3000,
+    });
+    toast.then((toast) => toast.present());
+  }
 
   goBack() {
     this.router.navigate(['/']);
