@@ -13,7 +13,6 @@ import { LoginService } from '../loginService';
   styleUrls: ['./login-register.page.scss'],
 })
 export class LoginRegisterPage implements OnInit {
-  user: User = new User('dasdasd@dasd.ch', '123456');
   isRegister: boolean = false;
   confirmTexts: string[] = ['Login', 'Registrieren'];
   confirmText: string = this.getConfirmText(); // + converts boolean to number
@@ -28,11 +27,11 @@ export class LoginRegisterPage implements OnInit {
     private loginService: LoginService
   ) {
     this.formData = new FormGroup({
-      email: new FormControl(this.user.email, [
+      email: new FormControl('dasdasd@dasd.ch', [
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z]+$'),
       ]),
-      password: new FormControl(this.user.password, [
+      password: new FormControl('123456', [
         Validators.required,
         Validators.minLength(6),
       ]),
@@ -69,55 +68,13 @@ export class LoginRegisterPage implements OnInit {
   }
 
   onSubmit() {
-    this.user = this.formData.value;
     console.log(this.confirmText);
+    this.loginService.user = this.formData.value;
 
-    if (this.isRegister) this.register();
-    else this.login();
+    if (this.isRegister) this.loginService.register();
+    else this.loginService.login();
 
-    if (this.loginService.isLoggedIn) this.goBack();
-  }
-
-  register() {
-    this.auth
-      .createUserWithEmailAndPassword(this.user.email, this.user.password)
-      .then((res: any) => {
-        this.showToast(
-          'Erfolgreich registriert! Sie sie werden automatisch eingelogt.',
-          'success'
-        );
-
-        this.storage.set('accessToken', res.user._delegate.accessToken);
-        this.loginService.isLoggedIn = true;
-      })
-      .catch((e: Error) => {
-        this.showToast('Falsche E-mail oder Passwort!', 'danger');
-        console.log(e);
-      });
-  }
-
-  login() {
-    this.auth
-      .signInWithEmailAndPassword(this.user.email, this.user.password)
-      .then((res: any) => {
-        this.showToast('Erfolgreich eingelogt!', 'success');
-        this.storage.set('accessToken', res.user._delegate.accessToken);
-        this.loginService.isLoggedIn = true;
-      })
-      .catch((e: Error) => {
-        this.showToast('Falsche E-mail oder Passwort!', 'danger');
-        console.error('Error during login:', e);
-      });
-  }
-
-  showToast(message: string, color: string) {
-    const toast = this.toastCtrl.create({
-      message: message,
-      position: 'bottom',
-      color: color,
-      duration: 3000,
-    });
-    toast.then((toast) => toast.present());
+    // if (this.loginService.isLoggedIn) this.goBack();
   }
 
   goBack() {
