@@ -18,7 +18,9 @@ export class LoginService {
     private auth: AngularFireAuth,
     private toastCtrl: ToastController,
     private storage: StorageService
-  ) {}
+  ) {
+    this.checkLoginStatus();
+  }
 
   manageLogin(func: (a: string, b: string) => any) {
     func(this.user.email, this.user.password)
@@ -45,8 +47,6 @@ export class LoginService {
 
         console.log(user, 'user');
         console.log(userInfo, 'userInfo');
-
-        this.isLoggedIn = true;
       })
       .catch((e: Error) => {
         this.showToast('Falsche E-mail oder Passwort!', 'danger');
@@ -66,11 +66,21 @@ export class LoginService {
     });
   }
 
-  checkLoginStatus() {}
+  checkLoginStatus() {
+    this.auth.onAuthStateChanged((user: any) => {
+      if (user) {
+        this.isLoggedIn = true;
+        console.log('User is logged in');
+      } else {
+        this.isLoggedIn = false;
+        this.loggedInData = {};
+        console.log('User is logged out');
+      }
+    });
+  }
 
   logout() {
     this.storage.remove('accessToken');
-    this.isLoggedIn = false;
     this.auth.signOut();
   }
 
