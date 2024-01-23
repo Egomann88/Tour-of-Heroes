@@ -29,8 +29,19 @@ export class LoginService {
 
         // speichern in storage / datenbank
         let user: FirebaseUser = res.user._delegate;
-        let userInfo: FirebaseUserInfo = res.user._delegate.providerData[0];
-        this.storage.set('accessToken', res.user._delegate.accessToken);
+        // setting the right providerData
+        let userInfo: FirebaseUserInfo = {
+          displayName: user.displayName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          photoURL: user.photoURL,
+          providerId: user.providerId,
+          uid: user.uid,
+        };
+
+        user.providerData[0] = userInfo; // setting the right providerData
+
+        this.storage.set('accessToken', user.accessToken);
 
         console.log(user, 'user');
         console.log(userInfo, 'userInfo');
