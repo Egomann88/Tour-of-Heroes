@@ -23,4 +23,8 @@ export class StorageService {
   get(key: string) {
     return this._storage?.get(key);
   }
+
+  remove(key: string) {
+    this._storage?.remove(key);
+  }
 }
