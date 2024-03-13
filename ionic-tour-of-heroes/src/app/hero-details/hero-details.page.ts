@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Hero } from '../hero';
+import { HEROES } from '../heroesMock';
 
 @Component({
   selector: 'app-hero-details',
@@ -9,37 +9,21 @@ import { Hero } from '../hero';
   styleUrls: ['./hero-details.page.scss'],
 })
 export class HeroDetailsPage implements OnInit {
-  id?: string;
+  id?: number;
   hero?: Hero;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private afFireStore: AngularFirestore
-  ) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
-      this.id = params.get('id')!;
+      this.id = +params.get('id')!;
       this.fetchHero();
     });
   }
 
   fetchHero() {
-    this.afFireStore
-      .collection('heroes')
-      .snapshotChanges()
-      .subscribe((res) => {
-        // map data from firebase to heroes
-        res.forEach((hero) => {
-          if (hero.payload.doc.id == this.id) {
-            this.hero = {
-              ...(hero.payload.doc.data() as Hero),
-              id: hero.payload.doc.id,
-            };
-          }
-        });
-      });
+    // implement real fetch logic later with firebase
+    this.hero = HEROES.find((hero) => hero.id == this.id);
   }
 
   goBack() {

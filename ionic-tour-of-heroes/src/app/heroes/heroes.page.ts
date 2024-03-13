@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { Hero } from '../hero';
+import { HEROES } from '../heroesMock';
+
 import { AlertController, ModalController } from '@ionic/angular';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { HeroManageComponent } from '../hero-manage/hero-manage.component';
 import { createEmptyHero } from '../heroService';
-import { Hero } from '../hero';
 
 @Component({
   selector: 'app-heroes',
@@ -11,35 +12,13 @@ import { Hero } from '../hero';
   styleUrls: ['heroes.page.scss'],
 })
 export class HeroesPage {
-  heroes: Hero[] = [];
+  heroes = HEROES;
   selectedHero?: Hero;
 
   constructor(
     private modalCtrl: ModalController,
-    private alertCtrl: AlertController,
-    private afFireStore: AngularFirestore
+    private alertCtrl: AlertController
   ) {}
-
-  ionViewDidEnter() {
-    // fetch data from firebase
-    this.afFireStore
-      .collection('heroes')
-      .snapshotChanges()
-      .subscribe((res) => {
-        let tmp: any = [];
-
-        // map data from firebase to heroes
-        res.forEach((hero) => {
-          tmp.push({
-            ...(hero.payload.doc.data() as Hero),
-            id: hero.payload.doc.id,
-          });
-        });
-
-        console.log(tmp);
-        this.heroes = tmp;
-      });
-  }
 
   unpack = (hero: Hero) => ({ ...hero });
 
@@ -52,39 +31,18 @@ export class HeroesPage {
 
     if (response.role != 'confirm') return;
 
-    this.afFireStore.collection('heroes').add(response.data);
+    this.heroes.push(response.data);
   }
 
   async editHero() {
     const response = await this.openModal('Aktualisieren', () =>
-      this.unpack(this.heroes.find(this.findHero)!)
+      this.unpack(HEROES.find(this.findHero)!)
     );
 
     if (response.role != 'confirm') return;
 
     const index = this.heroes.findIndex(this.findHero);
-    this.afFireStore
-      .collection('heroes')
-      .doc(this.heroes[index].id)
-      .update(response.data);
-  }
-
-  async deleteHero() {
-    const response = await this.openChoiceAlert(
-      'Notiz löschen',
-      'Willst du diesen Helden wirklich löschen?'
-    );
-
-    if (response.role != 'confirm') return;
-
-    try {
-      const index = this.heroes.findIndex(this.findHero);
-      this.selectedHero = undefined;
-
-      this.afFireStore.collection('heroes').doc(this.heroes[index].id).delete();
-    } catch (e) {
-      console.error(e);
-    }
+    this.heroes[index] = response.data;
   }
 
   async openModal(msg: string, func: () => Object) {
@@ -125,5 +83,23 @@ export class HeroesPage {
     alert.present();
 
     return await alert.onDidDismiss();
+  }
+
+  async deleteHero() {
+    const response = await this.openChoiceAlert(
+      'Notiz löschen',
+      'Willst du diesen Helden wirklich löschen?'
+    );
+
+    if (response.role != 'confirm') return;
+
+    try {
+      const index = this.heroes.findIndex(this.findHero);
+      this.selectedHero = undefined;
+
+      this.heroes.splice(index, 1);
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

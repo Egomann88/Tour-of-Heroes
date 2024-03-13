@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Hero } from '../hero';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-hero-manage',
@@ -26,6 +26,7 @@ export class HeroManageComponent {
 
     // create form
     this.formData = new FormGroup({
+      id: new FormControl(this.hero.id, Validators.required),
       name: new FormControl(this.hero.name, [
         Validators.required,
         Validators.maxLength(30),
@@ -40,6 +41,7 @@ export class HeroManageComponent {
 
   ngOnInit() {
     this.errors = {
+      id: [{ ErrorType: 'required', ErrorMessage: 'Id ist erforderlich.' }],
       name: [
         { ErrorType: 'required', ErrorMessage: 'Name ist erforderlich.' },
         {
@@ -49,7 +51,7 @@ export class HeroManageComponent {
         {
           ErrorType: 'pattern',
           ErrorMessage:
-            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende. Keine Leerzeichen nach Punkten.',
+            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende.',
         },
       ],
       superPower: [
@@ -60,7 +62,7 @@ export class HeroManageComponent {
         {
           ErrorType: 'pattern',
           ErrorMessage:
-            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende. Keine Leerzeichen nach Punkten.',
+            'Nur Buchstaben, Zahlen und Punkte erlaubt. Keine Leerzeichen oder Punkte am Anfang oder Ende.',
         },
       ],
     };

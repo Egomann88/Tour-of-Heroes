@@ -1,9 +1,10 @@
 export class Hero {
-  id: string = "";  // id is set by firebase
+  id: number;
   name: string;
   superPower?: string;
 
-  constructor(name: string, superPower?: string) {
+  constructor(id: number, name: string, superPower?: string) {
+    this.id = id;
     this.name = name;
     this.superPower = superPower;
   }
